@@ -1,5 +1,18 @@
 
 describe('LearnJS', function() {
+  it('invokes the router when loaded', function() {
+    spyOn(learnjs, 'showView');
+    learnjs.appOnReady();
+    expect(learnjs.showView).toHaveBeenCalledWith(window.location.hash);
+  });
+
+  it('subscribes to the hash change event', function() {
+    learnjs.appOnReady();
+    spyOn(learnjs, 'showView');
+    $(window).trigger('hashchange');
+    expect(learnjs.showView).toHaveBeenCalledWith(window.location.hash);
+  });
+
   it('can show a problem view', function() {
     learnjs.showView('#problem-1');
     expect($('.view-container .problem-view').length).toEqual(1);
