@@ -13,7 +13,7 @@ describe('LearnJS', function() {
     expect(learnjs.showView).toHaveBeenCalledWith(window.location.hash);
   });
 
-  it('can show a problem view', function() {
+  xit('can show a problem view', function() {
     learnjs.showView('#problem-1');
     expect($('.view-container .problem-view').length).toEqual(1);
   });
@@ -23,16 +23,31 @@ describe('LearnJS', function() {
     expect($('.view-container .landing-view').length).toEqual(1);
   });
 
-  it('passes the hash view parameter to the vire function', function() {
+  it('passes the hash view parameter to the view function', function() {
     spyOn(learnjs, 'problemView');
     learnjs.showView('#problem-42');
     expect(learnjs.problemView).toHaveBeenCalledWith('42');
   });
 
   describe('problem view', function() {
+    var view = learnjs.problemView('1');
+
     it('has a title that includes the problem number', function() {
-      var view = learnjs.problemView('1');
-      expect(view.text()).toEqual('Problem #1 Coming soon!');
+      expect(view.find('.title').text()).toEqual('Problem #1');
+    });
+
+    describe('answer section', function() {
+      it('can check a correct answer by hitting a button', function() {
+        view.find('.answer').val('true');
+        view.find('.check-btn').click();
+        expect(view.find('.result').text()).toEqual('Correct!');
+      });
+
+      it('can check a correct answer by hitting a button', function() {
+        view.find('.answer').val('false');
+        view.find('.check-btn').click();
+        expect(view.find('.result').text()).toEqual('Incorrect!');
+      });
     });
   });
 });
