@@ -7,7 +7,6 @@ import Footer from './Footer';
 
 const Page = (props) => (
   <div id="home_page">
-    <h1>Apartment Guide</h1>
     <Header />
     <Body />
     <Footer />
